@@ -64,15 +64,13 @@ int main(void) {
         fgets(original, capacity, text);
         fprintf(cipher, encode_text(original), "%s\n");
         printf("%d\n", strchr(original, '\n') == NULL);
-        // bug: even if there is more than 100 characters, fgets raeds it? lol
-        // so fgets: n-1 characters read from the file, last one is \0 (no null pointer put here)
+        
     }
 
     fclose(text);
     fclose(cipher);
 
 
-    // try implementing this with fgets(), way more efficient
     // Code below reads a line from file tex.txt
    FILE *f = fopen("tex.txt", "r");
    unsigned int length = 10, used = 0;
@@ -82,7 +80,7 @@ int main(void) {
       if (used == length - 1) {
          length *= 2;
          char *temp = realloc(text, length);
-         if (temp != NULL) { // hopefully realloc doesn't fail
+         if (temp != NULL) { 
             text = temp;
          } else {
             puts("Memory allocation error");
@@ -99,24 +97,8 @@ int main(void) {
 
 
 
-    return 0;
+    return EXIT_SUCCESS;
 }
 
-/*
-
-Done:
-- Check if it is in [65,90] or [97, 122], then subtract 65 or 97 from its 
-integer representation appropriately
-- If a special character, such as space, ', ;, ., :. BASICALLY if not in the 
-[65,90] or [97, 122] range, just return the character
-next up: file reading
-- Also consider this: pointer arithmetic, so (c_location - ALPHABET) / sizeof(char)
-- Actually nvm! just find index using char to int conversion, and use those conversion methods (addd to either 65 or 97)
-
-To add:
-- why can't we simply use a null pointer so that we can store indefinite lengths?
-worst case: just assume every line is at most 100 characters
-- why can't we use a null pointer (for original) so that we can store indefinite lengths?
-*/
 
 
