@@ -11,7 +11,7 @@ As of now, the Caesar library uses:
 
 
 ## Function Descriptions
-*Refer to caesar.h and caesar.c
+*Refer to caesar.h and caesar.c*
 
 **char text_cipher(const char c), char cipher_text(const char c)**: 'text-to-cipher' takes ascii alphabetical character c and returns its caesar cipher equivalent. 'cipher-to-text' does the opposite: c is the caesar-encoded character, so the function returns the original character.
 
