@@ -2,8 +2,7 @@
 
 char text_cipher(const char c) {
 
-    if (c == '\n' || c == ' ') { return c; } // no need to convert these
-    if (c == '\"') { return '\"'; }
+    if (c == '\n' || c == ' ' || c == '\"') { return c; } // no need to convert these
     int ascii_index = c; // automatic casting since it's casting down
     return (char)((ascii_index+3) % 127);
 
@@ -11,8 +10,7 @@ char text_cipher(const char c) {
 
 char cipher_text(const char c) {
 
-    if (c == '\n' || c == ' ') { return c; }
-    if (c == '\"') { return '\"'; }
+    if (c == '\n' || c == ' ' || c == '\"') { return c; }
     int ascii_index = c;
     return (char)((ascii_index+124) % 127); 
 
@@ -124,5 +122,5 @@ unsigned int decode_to_file(char *dest, char *src, unsigned int max_len) {
     text = NULL;
 
     return counter;
-    
+
 }
