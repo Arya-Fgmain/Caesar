@@ -1,47 +1,39 @@
 #include "caesar.h"
 
-#define ALPHABET "abcdefghijklmnopqrstuvwxyz"
-
 char text_cipher(const char c) {
-    unsigned int c_index = c; // automatic casting since it's casting down
-    if (c >= 'A' && c <= 'Z') {
-        c_index -= 'A';
-    } else if (c >= 'a' && c <= 'z') {
-        c_index -= 'a';
-    } else {
-        return c;
-    }
-    return ALPHABET[(c_index + 3) % 26];
+
+    if (c == '\n' || c == ' ') { return c; } // no need to convert these
+    if (c == '\"') { return '\"'; }
+    int ascii_index = c; // automatic casting since it's casting down
+    return (char)((ascii_index+3) % 127);
+
 }
 
 char cipher_text(const char c) {
-    unsigned int c_index = c; // automatic casting since it's casting down
-    if (c >= 'A' && c <= 'Z') {
-        c_index -= 'A';
-    } else if (c >= 'a' && c <= 'z') {
-        c_index -= 'a';
-    } else {
-        return c;
-    }
-    return ALPHABET[(c_index + 23) % 26];
+
+    if (c == '\n' || c == ' ') { return c; }
+    if (c == '\"') { return '\"'; }
+    int ascii_index = c;
+    return (char)((ascii_index+124) % 127); 
+
 }
 
-char *encode_line(const char *text) {
-    unsigned int length_text = strlen(text);
-    char *cipher = malloc(sizeof(char) * (length_text + 1));
-    for (int i = 0; i < length_text; i++) {
-        cipher[i] = text_cipher(text[i]);
+void encode_line(char *src) {
+
+    unsigned int length_src = strlen(src);
+    for (int i = 0; i < length_src; i++) {
+        src[i] = text_cipher(src[i]);
     }
-    return cipher;
+
 }
 
-char *decode_line(const char *cipher) {
-    unsigned int length_cipher = strlen(cipher);
-    char *text = malloc(sizeof(char) * (length_cipher + 1));
-    for (int i = 0; i < length_cipher; i++) {
-        text[i] = cipher_text(cipher[i]);
+void decode_line(char *src) {
+
+    unsigned int length_src = strlen(src);
+    for (int i = 0; i < length_src; i++) {
+        src[i] = cipher_text(src[i]);
     }
-    return text;
+
 }
 
 /*
@@ -74,7 +66,8 @@ unsigned int encode_to_file(char *dest, char *src, unsigned int max_len) {
     while (!feof(text)) {
         fgets(read_text, buffer_size, text);
         if (strcmp(read_text, "\n") != 0) {
-            fprintf(cipher, encode_line(read_text));
+            encode_line(read_text);
+            fprintf(cipher, read_text);
         }
         counter++;
     }
@@ -87,6 +80,7 @@ unsigned int encode_to_file(char *dest, char *src, unsigned int max_len) {
     cipher = NULL;
 
     return counter;
+
 }
 
 /*
@@ -116,7 +110,8 @@ unsigned int decode_to_file(char *dest, char *src, unsigned int max_len) {
     while (!feof(cipher)) {
         fgets(read_cipher, buffer_size, cipher);
         if (strcmp(read_cipher, "\n") != 0) {
-            fprintf(text, decode_line(read_cipher));
+            decode_line(read_cipher);
+            fprintf(text, read_cipher);
         }
         counter++;
     }
@@ -129,4 +124,5 @@ unsigned int decode_to_file(char *dest, char *src, unsigned int max_len) {
     text = NULL;
 
     return counter;
+    
 }
