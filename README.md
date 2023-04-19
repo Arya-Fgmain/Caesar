@@ -19,4 +19,7 @@ As of now, the Caesar library uses:
 
 **unsigned int encode_to_file(char \*dest, char \*src, unsigned int max_len), unsigned int decode_to_file(char \*dest, char \*src, unsigned int max_len)**: encode_to_file reads all the text from src and encodes them to dest, with the assumption that each line in src has at most 100 characters. decode_to_file does the opposite, taking cipher text and writing it to dest in english.
 
+## Check it out!
+Use the makefile provided, run the command 'make main' in the terminal. Then type in './main'. The main is written so that you can try out the encode_to_file function. For the source file name use "text.txt" and for the target file use "cipher.txt". The maximum no. of characters is 52.
+
 Enjoy! :tada:
