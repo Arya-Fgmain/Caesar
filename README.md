@@ -15,16 +15,32 @@ As of now, the Caesar library uses:
 ## Function Descriptions
 *Refer to caesar.h and caesar.c*
 
-**char text_cipher(const char c), char cipher_text(const char c)** 
-'Text-to-cipher' takes ascii alphabetical character c and returns its caesar cipher equivalent. 'cipher-to-text' does the opposite: c is the caesar-encoded character, so the function returns the original character.
+**char text_cipher(const char c)**
+Takes an ascii character and encodes it into caesar cipher by shifting it 3 positions to the right in the ascii chracter line. 
+Ex. text_cipher('a') returns 'd'
+Special cases: newline '\n', space ' ' and double-quotes '\"' are not converted.
 
-**char \*encode_line(const char \*text), char \*decode_line(const char \*text)**
-encode_line uses text_cipher to encode an entire string. decode_line again does the reverse, taking a string in caesar cipher and then translating it back to English.
+**char cipher_text(const char c)** 
+Takes an ascii character (in caesar cipher) and shifts it back to its original ascii value.
+Ex. cipher_text('d') returns 'a'
+Special cases: same as text_cipher
 
-**unsigned int encode_to_file(char \*dest, char \*src, unsigned int max_len), unsigned int decode_to_file(char \*dest, char \*src, unsigned int max_len)**:
-encode_to_file reads all the text from src and encodes them to dest, with the assumption that each line in src has at most 100 characters. decode_to_file does the opposite, taking cipher text and writing it to dest in english.
+**void encode_line(char \*src)**
+Takes a string of ascii characters and shifts all of them to their caesar cipher equivalent.
+Ex. "Julius Caesar" becomes "Mxolxv Fdhvdu"
+
+**void decode_line(char \*src)**
+Takes a string of caesar cipher text and translates it back to its original form.
+Ex. "Mxolxv Fdhvdu" becomes "Julius Caesar"
+
+**unsigned int encode_to_file(char \*dest, char \*src, unsigned int max_len)**
+Reads lines from src and translates them into caesar cipher, assuming each line in src is no more than max_len characters long.
+
+**unsigned int decode_to_file(char \*dest, char \*src, unsigned int max_len)**
+Reads lines from src and translates them from caesar cipher back into their original form, assuming each line in src is no more than max_len characters long.
 
 ## Check it out!
-Use the makefile provided, run the command 'make main' in the terminal. Then type in './main'. The main is written so that you can try out the encode_to_file function. For the source file name use "text.txt" and for the target file use "cipher.txt". The maximum no. of characters is 52.
+Download the repo. Use the Makefile in the Terminal: run 'make main', then run './main'
+For source file use "text.txt" and for target file use "cipher.txt"
 
 Enjoy! :tada:
