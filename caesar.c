@@ -1,49 +1,40 @@
 #include "caesar.h"
 
-char text_cipher(const char c) {
+char text_cipher(const char c, unsigned int shift) {
 
     if (c == '\n' || c == ' ' || c == '\"') { return c; } // no need to convert these
     int ascii_index = c; // automatic casting since it's casting down
-    return (char)((ascii_index+3) % 127);
+    return (char)((ascii_index+shift) % 127);
 
 }
 
-char cipher_text(const char c) {
+char cipher_text(const char c, unsigned int shift) {
 
     if (c == '\n' || c == ' ' || c == '\"') { return c; }
     int ascii_index = c;
-    return (char)((ascii_index+124) % 127); 
+    return (char)((ascii_index+(127-shift)) % 127); 
 
 }
 
-void encode_line(char *src) {
+void encode_line(char *src, unsigned int shift) {
 
     unsigned int length_src = strlen(src);
     for (int i = 0; i < length_src; i++) {
-        src[i] = text_cipher(src[i]);
+        src[i] = text_cipher(src[i], shift);
     }
 
 }
 
-void decode_line(char *src) {
+void decode_line(char *src, unsigned int shift) {
 
     unsigned int length_src = strlen(src);
     for (int i = 0; i < length_src; i++) {
-        src[i] = cipher_text(src[i]);
+        src[i] = cipher_text(src[i], shift);
     }
 
 }
 
-/*
-Writes the contents of src in caesar cipher
-to dest, assuming a max line length of max_len 
-0 - incorrect length input (less than 1)
-1 - file reading issue
-2 - memory allocation failure
-Upon success - returns number of lines read
-*/
-
-unsigned int encode_to_file(char *dest, char *src, unsigned int max_len) {
+unsigned int encode_to_file(char *dest, char *src, unsigned int max_len, unsigned int shift) {
 
     if (max_len < 1) { return 0; }
 
@@ -64,7 +55,7 @@ unsigned int encode_to_file(char *dest, char *src, unsigned int max_len) {
     while (!feof(text)) {
         fgets(read_text, buffer_size, text);
         if (strcmp(read_text, "\n") != 0) {
-            encode_line(read_text);
+            encode_line(read_text, shift);
             fprintf(cipher, read_text);
         }
         counter++;
@@ -81,15 +72,7 @@ unsigned int encode_to_file(char *dest, char *src, unsigned int max_len) {
 
 }
 
-/*
-Writes the contents of src in caesar cipher
-to dest, assuming a max line length of max_len 
-0 - incorrect length input (less than 1)
-1 - file reading issue
-2 - memory allocation failure
-Upon success - returns number of lines read
-*/
-unsigned int decode_to_file(char *dest, char *src, unsigned int max_len) {
+unsigned int decode_to_file(char *dest, char *src, unsigned int max_len, unsigned int shift) {
 
     if (max_len < 1) { return 0; }
 
@@ -108,8 +91,8 @@ unsigned int decode_to_file(char *dest, char *src, unsigned int max_len) {
     while (!feof(cipher)) {
         fgets(read_cipher, buffer_size, cipher);
         if (strcmp(read_cipher, "\n") != 0) {
-            decode_line(read_cipher);
-            fprintf(text, read_cipher);
+            decode_line(read_cipher, shift);
+            fprintf(text, read_cipher, shift);
         }
         counter++;
     }
