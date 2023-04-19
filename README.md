@@ -34,7 +34,7 @@ Takes a string of caesar cipher text and shifts every character inside by 'shift
 Ex. "Mxolxv Fdhvdu" becomes "Julius Caesar" with a shift of 3.
 
 **unsigned int encode_to_file(char \*dest, char \*src, unsigned int max_len, unsigned int shift)**
-Reads lines from src and translates them into caesar cipher (shifting by 'shift' characters), assuming each line in src is no more than max_len characters long. 
+Reads lines from src and translates them into caesar cipher (shifting by 'shift' characters), assuming each line in src is no more than max_len characters long.  
 Returns:
 * 0: if the max_len value was less than 1.
 * 1: if one of the files could not be opened (or did not exist).
