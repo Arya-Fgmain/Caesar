@@ -62,7 +62,9 @@ unsigned int encode_to_file(char *dest, char *src, unsigned int max_len) {
 
     if (text == NULL || cipher == NULL) { return 1; }
 
-    int buffer_size = max_len + 1;
+    int buffer_size = max_len + 2; 
+    // 2 extra characters for null termiantor and \0
+
     char *read_text = (char*)malloc(sizeof(char) * buffer_size);
 
     if (read_text == NULL) { return 2; }
@@ -104,7 +106,7 @@ unsigned int decode_to_file(char *dest, char *src, unsigned int max_len) {
 
     if (cipher == NULL || text == NULL) { return 1; }
 
-    int buffer_size = max_len + 1;
+    int buffer_size = max_len + 2;
     char *read_cipher = (char*)malloc(sizeof(char) * buffer_size);
 
     if (read_cipher == NULL) { return 2; }
