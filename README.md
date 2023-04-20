@@ -1,4 +1,4 @@
-## So what's all this about?
+## So what's all this about? :keyboard:
 Caesar is a C-library for encoding and decoding English text using the classic Caesar cipher! :sunglasses:
 
 *Currently the library uses a 3-character shift, meaning a becomes d & so on*
