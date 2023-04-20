@@ -50,5 +50,5 @@ Returns:
 ## Check it out!
 Download the repo. Use the Makefile in the Terminal: run 'make main', then run './main'.  
 For source file use "text.txt" and for target file use "cipher.txt".
-For max no. of characters use 52, and for shift try 3.
+For max no. of characters use 52, and for shift try 3.  
 Enjoy! :tada:
